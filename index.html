@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VectorWend: a word-path puzzle for mosquito &amp; vector control pros</title>
+<meta name="description" content="Trace the hidden mosquito and vector control words through the grid. New puzzle every Tuesday and Thursday.">
+<meta name="theme-color" content="#0f4c4a">
+
+<!-- Open Graph / LinkedIn preview (absolute URLs required by LinkedIn). -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="VectorWend: the word-path puzzle for vector control pros">
+<meta property="og:description" content="Larvicides, breeding sites, surveillance and more. Trace the hidden vector-control words through the grid. New puzzle every Tue &amp; Thu.">
+<meta property="og:image" content="https://clarkegame.github.io/vectorwend/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="VectorWend: a mosquito and vector control word-path puzzle">
+<meta property="og:url" content="https://clarkegame.github.io/vectorwend/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VectorWend: the word-path puzzle for vector control pros">
+<meta name="twitter:description" content="Trace the hidden vector-control words through the grid. New puzzle every Tue &amp; Thu.">
+<meta name="twitter:image" content="https://clarkegame.github.io/vectorwend/og-image.png">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f4c4a'/><text x='50' y='72' font-size='64' text-anchor='middle'>🦟</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn" id="btn-help" aria-label="How to play" title="How to play">?</button>
+  <div class="brand">
+    <h1>Vector<span>Wend</span></h1>
+    <div class="tagline">for mosquito &amp; vector control pros</div>
+  </div>
+  <button class="icon-btn" id="btn-stats" aria-label="Statistics" title="Statistics">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4 20h3V10H4v10zm6.5 0h3V4h-3v16zM17 20h3v-7h-3v7z"/></svg>
+  </button>
+</header>
+
+<div class="meta-bar" id="meta-bar">
+  <span class="chip" id="chip-num">Puzzle #-</span>
+  <span class="chip chip-len" id="chip-words">- words</span>
+  <span class="chip chip-time" id="chip-time" aria-label="Elapsed time">0:00</span>
+  <span class="chip chip-date" id="chip-date"></span>
+</div>
+
+<main>
+  <div class="grid-wrap" id="grid-wrap">
+    <svg class="lines" id="lines" aria-hidden="true"></svg>
+    <div id="grid" class="grid" role="grid" aria-label="Letter grid. Drag through adjacent letters to spell a hidden word."></div>
+  </div>
+  <div id="slots" class="slots" aria-live="polite"></div>
+  <div class="controls">
+    <button class="btn ctl" id="btn-hint" type="button"><span aria-hidden="true">&#x1F4A1;</span> Hint</button>
+    <button class="btn ctl" id="btn-undo" type="button"><span aria-hidden="true">&#x21B6;</span> Undo</button>
+    <button class="btn ctl" id="btn-reset" type="button"><span aria-hidden="true">&#x21BB;</span> Reset</button>
+  </div>
+</main>
+
+<footer class="foot">
+  Made for the vector control community. Product names are trademarks of their respective owners.
+  Not affiliated with LinkedIn or its games. <a href="https://clarkegame.github.io/vectorword/" class="xlink">Also try VectorWord &rarr;</a>
+</footer>
+
+<div id="toast-wrap" class="toast-wrap" aria-live="assertive"></div>
+
+<!-- How to play -->
+<div class="modal" id="modal-help" role="dialog" aria-modal="true" aria-labelledby="help-title" hidden>
+  <div class="modal-card">
+    <button class="close" data-close aria-label="Close">&times;</button>
+    <h2 id="help-title">How to play</h2>
+    <p>The grid hides several <b>vector control words</b>. The empty rows below it show how many there are and how long each one is.</p>
+    <ul class="help-list">
+      <li><b>Drag</b> through letters that touch <b>up, down, left or right</b> (no diagonals) and let go to submit.</li>
+      <li>Words bend and wind, and every letter is used in <b>exactly one</b> word. Gray tiles are walls.</li>
+      <li>Found words lock in with a color. Stuck? <b>Hint</b> reveals the next letter and lights up its tile.</li>
+    </ul>
+    <div class="ex-wrap">
+      <svg class="ex-svg" viewBox="0 0 132 132" aria-hidden="true"><polyline points="20,20 66,20 66,66 112,66 112,112" fill="none" stroke="#2e8b57" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="ex-grid">
+        <div class="tile sm c0">D</div><div class="tile sm c0">R</div><div class="tile sm">P</div>
+        <div class="tile sm">U</div><div class="tile sm c0">A</div><div class="tile sm c0">I</div>
+        <div class="tile sm wall"></div><div class="tile sm">E</div><div class="tile sm c0">N</div>
+      </div>
+    </div>
+    <p class="ex-cap"><b>DRAIN</b> winds through the grid: right, down, right, down.</p>
+    <p>Words cover field terms, disease surveillance, entomology and a few mosquito-control product names. When you finish, you'll see the theme and what each word means.</p>
+    <p class="sched"><b>New puzzle every Tuesday &amp; Thursday</b> (Pacific Time). Tuesday grids are 5&times;5; Thursday grids are a bigger 6&times;6.</p>
+    <button class="btn primary wide" data-close>Let's play</button>
+  </div>
+</div>
+
+<!-- Stats / result -->
+<div class="modal" id="modal-stats" role="dialog" aria-modal="true" aria-labelledby="stats-title" hidden>
+  <div class="modal-card">
+    <button class="close" data-close aria-label="Close">&times;</button>
+    <div id="result-block" class="result-block" hidden>
+      <h2 id="result-title">Solved!</h2>
+      <div class="result-sub" id="result-sub"></div>
+      <div class="result-nums">
+        <div><div class="stat-num" id="res-time">0:00</div><div class="stat-lbl">Time</div></div>
+        <div><div class="stat-num" id="res-hints">0</div><div class="stat-lbl">Hints</div></div>
+      </div>
+      <div class="theme-pill" id="res-theme"></div>
+    </div>
+    <div class="end-actions" id="end-actions" hidden>
+      <div class="countdown-box">
+        <div class="stat-lbl">Next puzzle in</div>
+        <div class="countdown" id="countdown">--:--:--</div>
+        <div class="next-date" id="next-date"></div>
+      </div>
+      <div class="share-btns">
+        <button class="btn primary" id="btn-share">Share <span aria-hidden="true">&#x1F99F;</span></button>
+        <button class="btn linkedin" id="btn-linkedin">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          Post to LinkedIn
+        </button>
+      </div>
+    </div>
+    <div id="words-block" hidden>
+      <h3>The words</h3>
+      <div class="word-list" id="word-list"></div>
+    </div>
+    <h3 id="stats-title">Statistics</h3>
+    <div class="stats-grid">
+      <div><div class="stat-num" id="st-played">0</div><div class="stat-lbl">Solved</div></div>
+      <div><div class="stat-num" id="st-streak">0</div><div class="stat-lbl">Current streak</div></div>
+      <div><div class="stat-num" id="st-max">0</div><div class="stat-lbl">Max streak</div></div>
+      <div><div class="stat-num" id="st-best">-</div><div class="stat-lbl">Best time</div></div>
+    </div>
+    <div class="stat-extra" id="st-extra"></div>
+    <div class="countdown-inline" id="countdown-inline"></div>
+    <p class="xlink-modal"><a href="https://clarkegame.github.io/vectorword/">Also try VectorWord, our daily 6-guess word game &rarr;</a></p>
+  </div>
+</div>
+
+<script src="puzzles.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

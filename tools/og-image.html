@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:627px;overflow:hidden;font-family:"DejaVu Sans",system-ui,sans-serif;
+ background:radial-gradient(circle at 80% 20%,#1b7f74 0%,#0f4c4a 55%,#0a3634 100%);color:#fff;position:relative}
+.grid{position:absolute;inset:0;opacity:.07;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px}
+.left{position:absolute;left:64px;top:70px;width:660px}
+h1{font-size:92px;font-weight:900;letter-spacing:1px;line-height:1}
+h1 span{color:#8cc63f}
+.sub{font-size:31px;margin-top:20px;opacity:.95;line-height:1.3}
+.sched{margin-top:34px;display:inline-block;background:rgba(255,255,255,.13);border:2px solid rgba(255,255,255,.3);padding:12px 22px;border-radius:12px;font-size:26px;font-weight:700}
+.how{margin-top:22px;font-size:22px;opacity:.8}
+.board{position:absolute;left:750px;top:113px;width:400px;height:400px}
+.board svg{position:absolute;inset:0;width:400px;height:400px}
+.tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,72px);gap:10px}
+.t{width:72px;height:72px;border-radius:14px;background:#f4f8f6;border:3px solid #cfdcd8;color:#123330;display:grid;place-items:center;font-size:40px;font-weight:900}
+.t.wall{background:repeating-linear-gradient(45deg,#8fa3a0,#8fa3a0 7px,#829794 7px,#829794 14px);border-color:#829794}
+.mz{position:absolute;left:430px;top:385px;width:250px;height:250px;transform:rotate(-10deg)}
+.trail{position:absolute;left:560px;top:300px}
+</style></head><body><div class="grid"></div>
+<div class="left">
+ <h1>Vector<span>Wend</span></h1>
+ <div class="sub">The word-path puzzle for mosquito &amp;<br>vector control professionals</div>
+ <div class="sched">🦟 New puzzle every Tue · Thu</div>
+ <div class="how">Drag through the grid to find the hidden words</div>
+</div>
+<div class="board"><svg viewBox="0 0 400 400"><polyline points="36,36 118,36 200,36 200,118 118,118 36,118" fill="none" stroke="#2e8b57" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/><polyline points="364,36 364,118 282,118 282,200" fill="none" stroke="#c98a0e" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/><polyline points="36,282 118,282 118,364 200,364" fill="none" stroke="#0b6fa4" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="tiles"><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">V</div><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">E</div><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">C</div><div class="t">A</div><div class="t" style="background:#c98a0e;border-color:transparent;color:#fff">W</div><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">R</div><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">O</div><div class="t" style="background:#2e8b57;border-color:transparent;color:#fff">T</div><div class="t" style="background:#c98a0e;border-color:transparent;color:#fff">N</div><div class="t" style="background:#c98a0e;border-color:transparent;color:#fff">E</div><div class="t">L</div><div class="t">U</div><div class="t">S</div><div class="t" style="background:#c98a0e;border-color:transparent;color:#fff">D</div><div class="t">K</div><div class="t" style="background:#0b6fa4;border-color:transparent;color:#fff">B</div><div class="t" style="background:#0b6fa4;border-color:transparent;color:#fff">I</div><div class="t">M</div><div class="t wall"></div><div class="t">P</div><div class="t">Z</div><div class="t" style="background:#0b6fa4;border-color:transparent;color:#fff">T</div><div class="t" style="background:#0b6fa4;border-color:transparent;color:#fff">E</div><div class="t">A</div><div class="t">F</div></div></div>
+<svg class="mz" viewBox="0 0 400 400">
+ <g stroke="#e9f5f1" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- legs -->
+  <path d="M190 215 L140 250 L95 330"/><path d="M200 220 L175 280 L160 370"/><path d="M212 220 L240 285 L250 372"/>
+  <path d="M185 205 L130 205 L70 250"/><path d="M220 212 L285 250 L330 330"/><path d="M222 205 L290 200 L350 240"/>
+  <!-- proboscis -->
+  <path d="M128 150 L40 118" stroke-width="4"/>
+  <!-- antennae -->
+  <path d="M140 138 L110 95" stroke-width="3"/><path d="M146 136 L128 88" stroke-width="3"/>
+ </g>
+ <!-- wings -->
+ <ellipse cx="235" cy="120" rx="95" ry="32" transform="rotate(-28 235 120)" fill="rgba(255,255,255,.28)" stroke="#e9f5f1" stroke-width="3"/>
+ <ellipse cx="258" cy="150" rx="88" ry="26" transform="rotate(-12 258 150)" fill="rgba(255,255,255,.2)" stroke="#e9f5f1" stroke-width="3"/>
+ <!-- abdomen -->
+ <g transform="rotate(18 270 215)">
+  <ellipse cx="275" cy="215" rx="88" ry="24" fill="#123330" stroke="#e9f5f1" stroke-width="4"/>
+  <path d="M225 193 v44 M250 191 v48 M275 191 v48 M300 192 v46 M325 196 v38" stroke="#8cc63f" stroke-width="5"/>
+ </g>
+ <!-- thorax & head -->
+ <ellipse cx="195" cy="185" rx="42" ry="34" fill="#123330" stroke="#e9f5f1" stroke-width="4"/>
+ <circle cx="145" cy="150" r="22" fill="#123330" stroke="#e9f5f1" stroke-width="4"/>
+ <circle cx="138" cy="146" r="7" fill="#8cc63f"/>
+</svg>
+</body></html>
