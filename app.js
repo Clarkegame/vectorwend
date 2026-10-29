@@ -310,8 +310,10 @@
   window.addEventListener("pagehide", function(){ accumulate(); save(KS, state); });
 
   // ---------- Finish / stats ----------
+  function gcEvent(n){ try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({path:"vectorwend-"+n, title:"vectorwend "+n, event:true}); } catch(e){} }
   function finish(fresh){
     if (fresh && stats.lastCounted !== PUZ){
+      gcEvent(state.status === "won" ? "complete-win" : "complete-loss");
       stats.played++; stats.lastCounted = PUZ;
       stats.streak = (stats.lastWin === PUZ - 1) ? stats.streak + 1 : 1;
       stats.lastWin = PUZ; stats.maxStreak = Math.max(stats.maxStreak, stats.streak);
@@ -389,6 +391,7 @@
   }
   var isMobile = (window.matchMedia && matchMedia("(pointer:coarse)").matches) || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   $("btn-share").addEventListener("click", function(){
+    gcEvent("share");
     var text = shareText();
     if (isMobile && navigator.share){
       navigator.share({text:text}).catch(function(err){ if (!err || err.name !== "AbortError") copyText(text).then(function(ok){ toast(ok ? "Result copied to clipboard" : "Couldn't copy"); }); });
@@ -397,6 +400,7 @@
     }
   });
   $("btn-linkedin").addEventListener("click", function(){
+    gcEvent("linkedin");
     var text = shareText();
     var url = "https://www.linkedin.com/feed/?shareActive=true&text=" + encodeURIComponent(text);
     var w = null; try { w = window.open(url, "_blank"); } catch(e){}
